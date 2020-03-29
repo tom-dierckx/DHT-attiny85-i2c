@@ -24,6 +24,7 @@ float humidity = 0.0;
 // i2c vars
 const byte SLAVE_ADDR = 0x64;
 const byte NUM_BYTES = 4;
+// commands we can send
 enum {
     CMD_ID = 1,
     CMD_READ_TEMP  = 2,
