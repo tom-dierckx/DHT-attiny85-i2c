@@ -14,7 +14,7 @@ All the code can be found in the src/main.cpp file.
 
 ## Being able to receive commands
 
-One of the most important things was that the i2c slave should be able to get some commands from the master. This would make it possible for the master to select in my case humidity or temperature. So this is implemented using an enum.
+One of the most important things was that the i2c slave should be able to get some commands from the master. This would make it possible for the master to select in my case humidity or temperature. You can also find an implementation for that in the code.
 
 ## TinyWireS limitations
 
@@ -27,7 +27,7 @@ The master is then able to convert the bytes back to the original value (again i
 
 Hope this helps some people in exposing sensors using an attiny(85) as a i2c slave. I added the main links that I used for setting up the code in the Credits.
 
-Oh and offcourse the final result:
+Oh and of course the final result:
 
 ![alt text](/images/endresult.png "Title")
 
