@@ -1,30 +1,26 @@
 #define __AVR_ATtiny84__
 
-// GOODREAD => http://www.gammon.com.au/i2c
+
 
 #include <Arduino.h>
 #include "TinyWireS.h"
-#include "Wire.h"
-#include <Adafruit_Sensor.h>
 #include <DHT.h>
-#include <DHT_U.h>
+#include <Adafruit_ADXL343.h>
 
 // dht vars
-const unsigned int dhtpin = 6;
+const unsigned int dhtpin = 1;
 #define DHTTYPE DHT22 // DHT 22 (AM2302)
-DHT_Unified dht(dhtpin, DHTTYPE);
+DHT dht(dhtpin, DHTTYPE);
 
 unsigned long previousDhtSensorPolling = 0;
-unsigned long dhtSensorPollingInterval = 15000;
-
-uint32_t delayMS;
-
+unsigned long dhtSensorPollingInterval = 2000;
 float temperature = 0.0;
 float humidity = 0.0;
+
 // i2c vars
 const byte SLAVE_ADDR = 0x64;
 const byte NUM_BYTES = 4;
-// commands we can send
+// command example found on http://www.gammon.com.au/i2c
 enum {
     CMD_ID = 1,
     CMD_READ_TEMP  = 2,
@@ -70,21 +66,17 @@ void setup() {
   TinyWireS.onRequest(requestEvent);
   // setup dht.begin();
   dht.begin();
-  sensor_t sensor;
-  dht.temperature().getSensor(&sensor);
-  // Print humidity sensor details.
-  dht.humidity().getSensor(&sensor);
-  // Set delay between sensor readings based on sensor details.
-  delayMS = sensor.min_delay / 1000;
 }
 
 void loop() {
   unsigned long currentMillis = millis();
-  if(currentMillis - previousDhtSensorPolling > dhtSensorPollingInterval) {
-    sensors_event_t event;
-    dht.temperature().getEvent(&event);
-    temperature = event.temperature;
-    humidity = event.relative_humidity;
+  if(currentMillis - previousDhtSensorPolling >= dhtSensorPollingInterval) {
+    previousDhtSensorPolling = currentMillis;
+    temperature = dht.readTemperature();
+    humidity = dht.readHumidity();
+    if (isnan(humidity) || isnan(temperature)) {
+      return;
+    }
   }
 }
 
