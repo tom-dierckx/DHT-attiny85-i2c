@@ -8,22 +8,29 @@ I tried a couple of supposidly "non_blocking" libraries but never got it to work
 When looking for a solution I came up with the idea of using a smaller dedicated micro controller that could expose the DHT data.
 I could have just waited on my order of BTE280 sensors, but I wanted to learn how to setup a basic i2c slave so reasons enough :).
 
-In this repo I try to show how I combined all the information that I could find on the web into one project (I just did the googling no credit goes to me).
+In this repo I try to show how I combined all the information that I could find on the web and put it into one project (I just did the googling no credit goes to me).
 
-## Being able to send commands
+All the code can be found in the src/main.cpp file.
 
-One of the most important things was that the i2c slave should be able to get some commands from the master. This would make it possible for the master to select in my case humidity or temperature. 
+## Being able to receive commands
+
+One of the most important things was that the i2c slave should be able to get some commands from the master. This would make it possible for the master to select in my case humidity or temperature. So this is implemented using an enum.
 
 ## TinyWireS limitations
 
 The library that I found online that was well documented was the TinyWireS.
-I In comparison to the Arduino Wire library the TinyWireS lib is only able to write bytes. So all the results are converted to byte arrays that are send to the master.
+In comparison to the Arduino Wire library the TinyWireS lib is only able to write bytes. So all the results are converted to byte arrays that are send to the master.
 
-The master is then able to convert the bytes back to the original value (again in my case floats).
+The master is then able to convert the bytes back to the original value (again in my case floats), I can make the master code available as well if anyone asks.
 
 ## Final note
 
-Hope this helps some people in exposing sensors using an attiny(85) as a i2c slave. I added the main links that I used for setting up the code.
+Hope this helps some people in exposing sensors using an attiny(85) as a i2c slave. I added the main links that I used for setting up the code in the Credits.
+
+Oh and offcourse the final result:
+
+![alt text](/images/endresult.png "Title")
+
 
 ## Credits
 
