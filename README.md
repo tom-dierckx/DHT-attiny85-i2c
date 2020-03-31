@@ -19,7 +19,7 @@ One of the most important things was that the i2c slave should be able to get so
 ## TinyWireS limitations
 
 The library that I found online that was well documented was the TinyWireS.
-In comparison to the Arduino Wire library the TinyWireS lib is only able to write bytes. So all the results are converted to byte arrays that are send to the master.
+In comparison to the Arduino Wire library the TinyWireS lib is only able to write bytes. So all the results are converted to byte arrays that are sent to the master.
 
 The master is then able to convert the bytes back to the original value (again in my case floats), I can make the master code available as well if anyone asks.
 
