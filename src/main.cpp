@@ -24,7 +24,8 @@ const byte NUM_BYTES = 4;
 enum {
     CMD_ID = 1,
     CMD_READ_TEMP  = 2,
-    CMD_READ_HUMIDITY = 3
+    CMD_READ_HUMIDITY = 3,
+    CMD_READ_ALL = 4
   };
 char command;
 
@@ -45,6 +46,17 @@ void requestEvent() {
         byte *humidByte = (byte *)&humidity;
         for (byte i=0; i<NUM_BYTES; i++) {
             TinyWireS.write(humidByte[i]);
+        }
+        break;
+        }
+      case CMD_READ_ALL: {
+        byte *humidByte = (byte *)&humidity;
+        byte *tempByte = (byte *)&temperature;
+        for (byte i=0; i<NUM_BYTES; i++) {
+            TinyWireS.write(humidByte[i]);
+        }
+        for (byte i=0; i<NUM_BYTES; i++) {
+            TinyWireS.write(tempByte[i]);
         }
         break;
         }
